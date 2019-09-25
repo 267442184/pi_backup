@@ -1,0 +1,31 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+
+# Add for mem disk
+mount  -t tmpfs -o size=500m  tmpfs /mnt/mxlog
+
+# Add for change IP
+cp -f /boot/MXSetup/IP.conf /etc/dhcpcd.conf
+service networking restart
+sleep 1
+
+cp -f /boot/MXSetup/account.conf /home/pi/compil/test/Auto-miner/
+/bin/bash /home/pi/compil/test/Auto-miner/auto_miner_init.sh
+
+exit 0
