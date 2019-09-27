@@ -22,7 +22,7 @@ case "$1" in
     echo "start autossh"
     killall -0 autossh
     if [ $? -ne 0 ];then
-       sudo /usr/bin/autossh -M 888 -fN -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "PasswordAuthentication=no" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R $bindport:localhost:22 -i /home/pi/.ssh/id_rsa root@39.100.238.72 
+       sudo /usr/bin/autossh -M 888 -fN -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "PasswordAuthentication=no" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R $bindport:localhost:22 -i /home/pi/.ssh/id_rsa root@www.minerx.xyz
     fi
     ;;
     stop)
@@ -30,7 +30,7 @@ case "$1" in
     ;;
     restart)
     sudo killall autossh
-    sudo /usr/bin/autossh -M 888 -fN -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "PasswordAuthentication=no" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R $bindport:localhost:22 -i /home/pi/.ssh/id_rsa root@39.100.238.72
+    sudo /usr/bin/autossh -M 888 -fN -o "PubkeyAuthentication=yes" -o "StrictHostKeyChecking=false" -o "PasswordAuthentication=no" -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -R $bindport:localhost:22 -i /home/pi/.ssh/id_rsa root@www.minerx.xyz
     ;;
     *)
     echo "Usage: $0 (start|stop|restart)"
