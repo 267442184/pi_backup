@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 #
 # rc.local
 #
@@ -24,14 +24,18 @@ fi
 # Add for extsd disk
 #mount /dev/mmcblk0p5 /media/pi/MXLOG
 
+
+LOG_FILE="/home/pi/changeIP.log"
 # Add for change IP
 filenew="/boot/MXSetup/IP.conf"
 fileold="/etc/dhcpcd.conf"
 diff $fileold $filenew >/dev/null
-if [ $? != 0 ]; then
-  echo "IP config is changed, restart network"
+if [ $? -ne 0 ]; then
   cp -f $filenew $fileold
   service networking restart
+  echo "IP config is changed, restart network">>${LOG_FILE}
+else
+  echo "IP config is same, no need to change">>${LOG_FILE}
 fi
 
 sleep 1
