@@ -1,0 +1,7 @@
+proc            /proc           proc    defaults          0       0
+PARTUUID=3b18e43a-01  /boot           vfat    defaults          0       2
+PARTUUID=3b18e43a-02  /               ext4    defaults,noatime  0       1
+/dev/mmcblk0p5	/media/pi/MXLOG	      ext4    defaults          0       2
+tmpfs 	/mnt/mxlog 		      tmpfs   defaults,size=500M 0      0
+# a swapfile is not a swap partition, no line here
+#   use  dphys-swapfile swap[on|off]  for that

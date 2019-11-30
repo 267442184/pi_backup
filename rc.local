@@ -17,15 +17,26 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+# Alex, 20191130, move mount to fstab
 # Add for mem disk
-mount  -t tmpfs -o size=500m  tmpfs /mnt/mxlog
+#mount  -t tmpfs -o size=500m  tmpfs /mnt/mxlog
+
+# Add for extsd disk
+#mount /dev/mmcblk0p5 /media/pi/MXLOG
 
 # Add for change IP
-cp -f /boot/MXSetup/IP.conf /etc/dhcpcd.conf
-service networking restart
+filenew="/boot/MXSetup/IP.conf"
+fileold="/etc/dhcpcd.conf"
+diff $fileold $filenew >/dev/null
+if [ $? != 0 ]; then
+  echo "IP config is changed, restart network"
+  cp -f $filenew $fileold
+  service networking restart
+fi
+
 sleep 1
 
-cp -f /boot/MXSetup/account.conf /home/pi/compil/test/Auto-miner/
-/bin/bash /home/pi/compil/test/Auto-miner/auto_miner_init.sh
+cp -f /boot/MXSetup/account.conf /home/pi/MXMiner/Auto-miner/
+/bin/bash /home/pi/MXMiner/Auto-miner/auto_miner_init.sh
 
 exit 0
